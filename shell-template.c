@@ -63,33 +63,6 @@ void change_dir(char *param)
 	free(curr_dir);
 }
 
-void subrt_init(struct cmdline *l) {
-	char** cmd;
-
-	cmd = l->seq[0];
-
-	if(execvp(cmd[0], cmd)==-1)
-	{
-		perror("twoshell");
-	}
-	exit(errno);
-}
-
-void exec_cmd(struct cmdline *l)
-{
-	pid_t pid;
-	switch (pid = fork())
-	{
-	case -1:
-		perror("fork");
-		break;
-	case 0:
-		subrt_init(l);
-	default:
-		if (waitpid(pid, NULL, 0) == -1)
-			perror("waitpid failed");
-	}
-}
 
 int main()
 {
